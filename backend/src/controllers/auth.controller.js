@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
 				_id: newUser._id,
 				fullName: newUser.fullName,
 				email: newUser.email,
-				profilePic: newUser.profileImage,
+				profileImage: newUser.profileImage,
 			});
 		} else {
 			res.status(400).json({ message: "invalid user data" });
@@ -53,26 +53,27 @@ export const login = async (req, res) => {
 		if (!user) return res.status(400).json({ message: "invalid creditials" });
 
 		const isPasswordCorrect = await bcrypt.compare(password, user.password);
-		if (!isPasswordCorrect) return res.status(400).json({ message: "invalid creditials" });
+		if (!isPasswordCorrect)
+			return res.status(400).json({ message: "invalid creditials" });
 
 		generateToken(user._id, res);
-    res.status(200).json({
-      _id: user._id,
-      fullName: user.fullName,
-      email: user.email,
-      profilePic: user.profileImage,
-    });
+		res.status(200).json({
+			_id: user._id,
+			fullName: user.fullName,
+			email: user.email,
+			profileImage: user.profileImage,
+		});
 	} catch (error) {
 		console.log(error);
-    res.status(500).json({ message: "Server error" });
+		res.status(500).json({ message: "Server error" });
 	}
 };
 
 export const logout = (req, res) => {
 	try {
 		res.cookie("jwt", "", {
-			maxAge: 0
-		})
+			maxAge: 0,
+		});
 		res.status(200).json({ message: "Logout successful" });
 	} catch (error) {
 		console.log(error);
@@ -80,32 +81,35 @@ export const logout = (req, res) => {
 	}
 };
 
-
 export const updateProfile = async (req, res) => {
 	try {
-		const {profileImage} = req.body;
-		if(!profileImage){
+		const { profileImage } = req.body;
+		if (!profileImage) {
 			return res.status(400).json({ message: "Profile image is required" });
 		}
 
 		const userId = req.user._id;
-		const uploadResponse = await cloudinary.uploader.upload(profileImage);
-		const updatedUser = await User.findByIdAndUpdate(userId, {profileImage:uploadResponse.secure_url}, {new: true});
+		const uploadResponse = await cloudinary.uploader.upload(profileImage, {
+			folder: "fullstack-chat-app/profile",
+		});
+		const updatedUser = await User.findByIdAndUpdate(
+			userId,
+			{ profileImage: uploadResponse.secure_url },
+			{ new: true }
+		);
 
 		res.status(200).json(updatedUser);
-
-
 	} catch (error) {
 		console.log("error in update profile", error);
 		res.status(500).json({ message: "Server error" });
 	}
-}
+};
 
 export const checkAuth = (req, res) => {
 	try {
 		res.status(200).json(req.user);
 	} catch (error) {
 		console.log(error);
-    res.status(500).json({ message: "Server error" });
+		res.status(500).json({ message: "Server error" });
 	}
-}
+};

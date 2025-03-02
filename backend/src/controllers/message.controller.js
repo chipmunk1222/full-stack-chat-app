@@ -1,6 +1,8 @@
 import Users from "../models/user.model.js";
 import Message from "../models/message.model.js";
 
+import cloudinary from "../lib/cloudinary.js";
+
 export const getUsersForSidebar = async (req, res) => {
 	try {
 		const loggedinUserId = req.user._id;
@@ -32,30 +34,31 @@ export const getMessages = async (req, res) => {
 };
 
 export const sendMessage = async (req, res) => {
-  try {
-    const {text,image} = req.body;
-    const senderId = req.user._id;
-    const receiverId = req.params.id;
+	try {
+		const { text, image } = req.body;
+		const senderId = req.user._id;
+		const receiverId = req.params.id;
 
-    let imageUrl;
-    if(image){
-      const uploadResponse = await cloudinary.uploader.upload(image);
-      imageUrl = uploadResponse.secure_url;
-    }
+		let imageUrl;
+		if (image) {
+			const uploadResponse = await cloudinary.uploader.upload(image, {
+				folder: "fullstack-chat-app/message",
+			});
+			imageUrl = uploadResponse.secure_url;
+		}
 
-    const newMessage = new Message({
-      senderID: senderId,
-      receiverID: receiverId,
-      text,
-      image:imageUrl
-    });
+		const newMessage = new Message({
+			senderID: senderId,
+			receiverID: receiverId,
+			text,
+			image: imageUrl,
+		});
 
-    await newMessage.save();
+		await newMessage.save();
 
-    res.status(201).json(newMessage);
-
-  } catch (error) {
-    console.log("error in send message", error.message);
-    res.status(500).json({ message: "Server error" });
-  }
+		res.status(201).json(newMessage);
+	} catch (error) {
+		console.log("error in send message", error.message);
+		res.status(500).json({ message: "Server error" });
+	}
 };

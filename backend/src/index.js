@@ -1,24 +1,29 @@
 // const express = require("express");
 // const cors = require("cors");
 import express from "express";
+import "dotenv/config";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 
-import "dotenv/config";
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 import { connectDB } from "./lib/db.js";
 
 const app = express();
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN || 'http://localhost:5137',
-    credentials: true,
+    credentials: true, 
   })
 );
+
 // app.use(cors({ origin: true }));
 
 app.use("/api/auth", authRoutes);
