@@ -1,5 +1,4 @@
-// const express = require("express");
-// const cors = require("cors");
+
 import express from "express";
 import "dotenv/config";
 import authRoutes from "./routes/auth.route.js";
@@ -12,7 +11,9 @@ import bodyParser from "body-parser";
 
 import { connectDB } from "./lib/db.js";
 
-const app = express();
+import {app, io,server} from './lib/socket.js'
+
+// const app = express();
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
@@ -36,7 +37,7 @@ const PORT = process.env.PORT || 5001;
 //   return res.json({ username: username, secret: "sha256..." });
 // });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("listening on port:", PORT)
   connectDB();
 });
