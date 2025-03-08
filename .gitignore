@@ -1,6 +1,5 @@
 # frontrnd/node_modules/
 backend/node_modules/
-backend/.env1
 backend/.env
 .vscode/*
 
