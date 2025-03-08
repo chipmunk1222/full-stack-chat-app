@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "node src/index.js"
   },
   "author": "",
   "type": "module",
@@ -21,6 +21,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.4",
+    "nodejs-react-chat": "file:..",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
