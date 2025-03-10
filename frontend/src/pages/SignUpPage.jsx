@@ -16,8 +16,13 @@ import AuthImagePattern from "../components/AuthImagePattern.jsx";
 
 import {toast} from "react-hot-toast";
 
+import { useTranslation } from "react-i18next";
+
+
 
 const SignUpPage = () => {
+	const { t } = useTranslation();
+	
 	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState({
 		fullName: "",
@@ -65,9 +70,9 @@ const SignUpPage = () => {
 							<div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
 								<MessageSquare className="size-6 text-primary" />
 							</div>
-							<h1 className="text-2xl font-bold mt-2">Create Your Account</h1>
+							<h1 className="text-2xl font-bold mt-2">{t("Create Your Account")}</h1>
 							<p className="text-base-content/60">
-								Get Start With Your Account{" "}
+								{t("Get Start With Your Account")}{" "}
 							</p>
 						</div>
 					</div>
@@ -76,7 +81,7 @@ const SignUpPage = () => {
 					<form onSubmit={handleSubmit} className="space-y-6">
 						<div className="form-control">
 							<label className="label">
-								<span className="label-text font-medium">Full Name</span>
+								<span className="label-text font-medium">{t("Full Name")}</span>
 							</label>
 							<div className="relative">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -96,7 +101,7 @@ const SignUpPage = () => {
 
 						<div className="form-control">
 							<label className="label">
-								<span className="label-text font-medium">Email</span>
+								<span className="label-text font-medium">{t("Email")}</span>
 							</label>
 							<div className="relative">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -116,7 +121,7 @@ const SignUpPage = () => {
 
 						<div className="form-control">
 							<label className="label">
-								<span className="label-text font-medium">Password</span>
+								<span className="label-text font-medium">{t("Password")}</span>
 							</label>
 							<div className="relative">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -153,7 +158,7 @@ const SignUpPage = () => {
 							{isSigningUp ? (
 								<>
 									<Loader2 className="size-5 animate-spin" />
-									Loading...
+									{t("Loading")}...
 								</>
 							) : (
 								"Create Account"
@@ -163,9 +168,9 @@ const SignUpPage = () => {
 
 					<div className="text-center">
 						<p className="text-base-content/60">
-							Already have an account?{" "}
+							{t("Already have an account?")}{" "}
 							<Link to="/login" className="link link-primary">
-								Sign in
+								{t("Sign in")}
 							</Link>
 						</p>
 					</div>

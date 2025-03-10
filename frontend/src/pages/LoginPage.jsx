@@ -4,7 +4,9 @@ import AuthImagePattern from "../components/AuthImagePattern";
 import { Link } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
 const LoginPage = () => {
+	const { t } = useTranslation();
 	const { login, isLoggingIn } = useAuthStore();
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -32,8 +34,8 @@ const LoginPage = () => {
 							>
 								<MessageSquare className="w-6 h-6 text-primary" />
 							</div>
-							<h1 className="text-2xl font-bold mt-2">Welcome Back</h1>
-							<p className="text-base-content/60">Sign in to your account</p>
+							<h1 className="text-2xl font-bold mt-2">{t("Welcome Back")}</h1>
+							<p className="text-base-content/60">{t("Sign in to your account")}</p>
 						</div>
 					</div>
 
@@ -41,7 +43,7 @@ const LoginPage = () => {
 					<form onSubmit={handleSubmit} className="space-y-6">
 						<div className="form-control">
 							<label className="label">
-								<span className="label-text font-medium">Email</span>
+								<span className="label-text font-medium">{t("Email")}</span>
 							</label>
 							<div className="relative">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -50,7 +52,7 @@ const LoginPage = () => {
 								<input
 									type="email"
 									className={`input input-bordered w-full pl-10`}
-									placeholder="you@example.com"
+									placeholder="admin@qq.com"
 									value={formData.email}
 									onChange={(e) =>
 										setFormData({ ...formData, email: e.target.value })
@@ -61,7 +63,7 @@ const LoginPage = () => {
 
 						<div className="form-control">
 							<label className="label">
-								<span className="label-text font-medium">Password</span>
+								<span className="label-text font-medium">{t("Password")}</span>
 							</label>
 							<div className="relative">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -70,7 +72,7 @@ const LoginPage = () => {
 								<input
 									type={showPassword ? "text" : "password"}
 									className={`input input-bordered w-full pl-10`}
-									placeholder="••••••••"
+									placeholder="admin111"
 									value={formData.password}
 									onChange={(e) =>
 										setFormData({ ...formData, password: e.target.value })
@@ -98,19 +100,19 @@ const LoginPage = () => {
 							{isLoggingIn ? (
 								<>
 									<Loader2 className="h-5 w-5 animate-spin" />
-									Loading...
+									{t("Loading...")}
 								</>
 							) : (
-								"Sign in"
+								t("Sign in")
 							)}
 						</button>
 					</form>
 
 					<div className="text-center">
 						<p className="text-base-content/60">
-							Don&apos;t have an account?{" "}
+							{t("Don't have an account?")}{" "}
 							<Link to="/signup" className="link link-primary">
-								Create account
+								{t("Create account")}
 							</Link>
 						</p>
 					</div>
@@ -119,9 +121,9 @@ const LoginPage = () => {
 
 			{/* Right Side - Image/Pattern */}
 			<AuthImagePattern
-				title={"Welcome back!"}
+				title={t("Welcome back!")}
 				subtitle={
-					"Sign in to continue your conversations and catch up with your messages."
+					t("Sign in to continue your conversations and catch up with your messages.")
 				}
 			/>
 		</div>

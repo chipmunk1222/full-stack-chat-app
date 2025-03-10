@@ -1,10 +1,17 @@
 import React from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { LogOut, MessageSquare, Settings, User } from "lucide-react";
+import { Languages, LogOut, MessageSquare, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
 	const { logout, authUser } = useAuthStore();
+
+	const { t, i18n } = useTranslation();
+
+	const changeLanguage = (lng) => {
+		i18n.changeLanguage(lng);
+	};
 
 	return (
 		<header
@@ -21,11 +28,23 @@ const NavBar = () => {
 							<div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
 								<MessageSquare className="w-5 h-5 text-primary" />
 							</div>
-							<h1 className="text-lg font-bold">Chatty</h1>
+						<h1 className="text-lg font-bold">{t("Chatty")}</h1>
 						</Link>
 					</div>
 
 					<div className="flex items-center gap-2">
+						<div className="flex items-center gap-2">
+							<h1>{t("language")}</h1>
+							<input
+								type="checkbox"
+								defaultChecked
+								className="toggle border-indigo-600 bg-indigo-500 checked:bg-orange-400 checked:text-orange-800 checked:border-orange-500 "
+								onChange={(e) => changeLanguage(e.target.checked ? "en" : "zh")}
+							/>
+							<Languages />
+							
+						</div>	
+
 						<Link
 							to={"/settings"}
 							className={`
@@ -34,19 +53,19 @@ const NavBar = () => {
               `}
 						>
 							<Settings className="w-4 h-4" />
-							<span className="hidden sm:inline">Settings</span>
+							<span className="hidden sm:inline">{t("Settings")}</span>
 						</Link>
 
 						{authUser && (
 							<>
 								<Link to={"/profile"} className={`btn btn-sm gap-2`}>
 									<User className="size-5" />
-									<span className="hidden sm:inline">Profile</span>
+									<span className="hidden sm:inline">{t("Profile")}</span>
 								</Link>
 
 								<button className="flex gap-2 items-center" onClick={logout}>
 									<LogOut className="size-5" />
-									<span className="hidden sm:inline">Logout</span>
+									<span className="hidden sm:inline">{t("Logout")}</span>
 								</button>
 							</>
 						)}

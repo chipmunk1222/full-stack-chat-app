@@ -3,6 +3,7 @@ import React from "react";
 import { THEMES } from "../constants";
 import { useThemeStore } from "../store/useThemeStore";
 import { Send } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const PREVIEW_MESSAGES = [
 	{ id: 1, content: "Hey! How's it going?", isSent: false },
@@ -14,14 +15,15 @@ const PREVIEW_MESSAGES = [
 ];
 
  const SettingPage = () => {
+	const { t, i18n } = useTranslation();
 	const { theme, setTheme } = useThemeStore();
 
 	return (
 		<div className="space-y-6 pt-20 p-12">
 			<div className="flex flex-col gap-1">
-				<h2 className="text-lg font-semibold">Theme</h2>
+				<h2 className="text-lg font-semibold">{t("Theme")}</h2>
 				<p className="text-sm text-base-content/70">
-					Choose a theme for your chat interface
+					{t("Choose a theme for your chat interface")}
 				</p>
 			</div>
 
@@ -54,7 +56,7 @@ const PREVIEW_MESSAGES = [
 			</div>
 
 			{/* Preview Section */}
-			<h3 className="text-lg font-semibold mb-3">Preview</h3>
+			<h3 className="text-lg font-semibold mb-3">{t("Preview")}</h3>
 			<div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow-lg">
 				<div className="p-4 bg-base-200">
 					<div className="max-w-lg mx-auto">
